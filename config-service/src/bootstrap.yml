@@ -4,6 +4,7 @@ server:
 spring:
   cloud:
     config:
+      enabled: true
       server:
         git:
           uri: https://github.com/joseleonec/microservices_spring_boot.git
