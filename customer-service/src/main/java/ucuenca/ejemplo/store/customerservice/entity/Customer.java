@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tbl_customers")
+@Table(name = "TBL_CUSTOMERS")
 public class Customer implements Serializable {
 
     @Id

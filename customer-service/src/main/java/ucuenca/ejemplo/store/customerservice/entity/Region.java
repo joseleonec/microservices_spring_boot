@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tbl_regions")
+@Table(name = "TBL_REGIONS")
 public class Region implements Serializable {
 
     @Id
