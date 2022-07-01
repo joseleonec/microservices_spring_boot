@@ -1,6 +1,7 @@
+
 spring:
     application:
-        name: customer-service
+        name: registry-service
     cloud:
         config:
             enabled: true
