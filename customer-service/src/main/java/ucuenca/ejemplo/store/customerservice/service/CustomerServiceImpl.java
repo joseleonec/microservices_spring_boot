@@ -6,81 +6,69 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import ucuenca.ejemplo.store.customerservice.entity.Customer;
-import ucuenca.ejemplo.store.customerservice.entity.Region;
 import ucuenca.ejemplo.store.customerservice.repository.CustomerRepository;
+import ucuenca.ejemplo.store.customerservice.repository.entity.Customer;
+import ucuenca.ejemplo.store.customerservice.repository.entity.Region;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
-
-    public static org.slf4j.Logger getLog() {
-        return log;
-    }
 
     @Autowired
     CustomerRepository customerRepository;
 
     @Override
     public List<Customer> findCustomerAll() {
-        // TODO Auto-generated method stub
-
         return customerRepository.findAll();
     }
 
     @Override
-    public Customer findCustomerById(Long id) {
-        // TODO Auto-generated method stub
-        return customerRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Customer> findCustomerByRegion(Region region) {
-        // TODO Auto-generated method stub
+    public List<Customer> findCustomersByRegion(Region region) {
         return customerRepository.findByRegion(region);
     }
 
     @Override
-    public List<Customer> findCustomerByRegionId(Long id) {
-        // TODO Auto-generated method stub
-        return customerRepository.findByRegionId(id);
-    }
-
-    @Override
     public Customer createCustomer(Customer customer) {
-        // TODO Auto-generated method stub
-        return customerRepository.save(customer);
+
+        Customer customerDB = customerRepository.findByNumberID ( customer.getNumberID () );
+        System.out.println("Encuentra el id del CustomerDB: " + customerDB);
+        if (customerDB != null){
+            return  customerDB;
+        }
+
+        customer.setState("CREATED");
+        customerDB = customerRepository.save ( customer );
+        return customerDB;
     }
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        // TODO Auto-generated method stub
-        Customer customerUpdate = findCustomerById(customer.getId());
-        if (customerUpdate != null) {
-            customerUpdate.setFirstName(customer.getFirstName());
-            customerUpdate.setLastName(customer.getLastName());
-            customerUpdate.setEmail(customer.getEmail());
-            customerUpdate.setPhotoUrl(customer.getPhotoUrl());
-            return customerRepository.save(customerUpdate);
-        } else {
-            return null;
+        Customer customerDB = getCustomer(customer.getId());
+        if (customerDB == null){
+            return  null;
         }
+        customerDB.setFirstName(customer.getFirstName());
+        customerDB.setLastName(customer.getLastName());
+        customerDB.setEmail(customer.getEmail());
+        customerDB.setPhotoUrl(customer.getPhotoUrl());
+
+        return  customerRepository.save(customerDB);
     }
 
     @Override
     public Customer deleteCustomer(Customer customer) {
-        // TODO Auto-generated method stub
-        // Delete customer
-        Customer customerUpdate = findCustomerById(customer.getId());
-        if (customerUpdate != null) {
-            customerUpdate.setState("DELETED");
-            return customerRepository.save(customerUpdate);
-        } else {
-            return null;
+        Customer customerDB = getCustomer(customer.getId());
+        if (customerDB ==null){
+            return  null;
         }
-
+        customer.setState("DELETED");
+        return customerRepository.save(customer);
     }
 
+    @Override
+    public Customer getCustomer(Long id) {
+        return  customerRepository.findById(id).orElse(null);
+    }
+
+    
 }

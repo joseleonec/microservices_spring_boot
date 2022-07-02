@@ -1,5 +1,4 @@
-package ucuenca.ejemplo.store.shoppingservice.controller;
-
+package ucuenca.ejemplo.store.shoppingservice.Controller;
 
 import lombok.Builder;
 import lombok.Getter;

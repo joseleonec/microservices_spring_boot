@@ -52,9 +52,9 @@ public class ProductRepositoryMockTest {
 
     }
 
-    @Test
-    public void testFindByName() {
-        Product product = productRepository.findByName("Product 1");
-        assert product == null;
-    }
+    // @Test
+    // public void testFindByName() {
+    //     Product product = productRepository.findByName("Product 1");
+    //     assert product == null;
+    // }
 }

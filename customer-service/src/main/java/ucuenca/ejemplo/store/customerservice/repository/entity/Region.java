@@ -1,4 +1,4 @@
-package ucuenca.prograweb.store.customerservice.repository.entity;
+package ucuenca.ejemplo.store.customerservice.repository.entity;
 
 
 

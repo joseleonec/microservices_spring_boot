@@ -29,97 +29,74 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // @GetMapping
-    // public ResponseEntity<List<Product>> listProduct(
-    //         @RequestParam(name = "categoryId", required = false) Long categoryId) {
-    //     List<Product> products = new ArrayList<>();
-    //     if (categoryId == null) {
-    //         products = productService.listAllProducts();
-    //         if (products.isEmpty()) {
-    //             return ResponseEntity.noContent().build();
-    //         }
-    //     } else {
-    //         products = productService.findByCategory(Category.builder().id(categoryId).build());
-    //         if (products.isEmpty()) {
-    //             return ResponseEntity.notFound().build();
-    //         }
-    //     }
-
-    //     return ResponseEntity.ok(products);
-    // }
-
-    @GetMapping
-    public ResponseEntity<List<Product>> listProductByCategoryId(
-            @RequestParam(name = "categoryId", required = false) Long categoryId) {
-        List<Product> products = new ArrayList<>();
-        if (categoryId == null) {
-            products = productService.listAllProducts();
-            if (products.isEmpty()) {
+    @GetMapping()
+    public ResponseEntity<List<Product>> listProduct(@RequestParam(name="categoryId",required = false) Long categoryId){
+        List<Product> products=new ArrayList<>();
+        if(categoryId == null){
+            products = productService.listAllProduct();
+            if(products.isEmpty()){
                 return ResponseEntity.noContent().build();
             }
-        } else {
-            products = productService.findByCategoryId(categoryId);
-            if (products.isEmpty()) {
+        }else{
+            products=productService.findByCategory(Category.builder().id(categoryId).build());
+            if(products.isEmpty()){
                 return ResponseEntity.notFound().build();
             }
         }
 
         return ResponseEntity.ok(products);
     }
-
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id){
         Product product = productService.getProduct(id);
-        if (product == null) {
+        if(product == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(product);
     }
-
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product, BindingResult result) {
-        if (result.hasErrors()) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product, BindingResult result){
+        if (result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
         }
-        Product productCreate = productService.createProduct(product);
+        Product productCreate =  productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productCreate);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable("id")Long id, @RequestBody Product product){
         product.setId(id);
-        Product productUpdate = productService.updateProduct(product);
-        if (productUpdate == null) {
+        Product productUpdate=productService.updateProduct(product);
+        if(productUpdate==null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(productUpdate);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id) {
-        Product productDelete = productService.deleteProduct(id);
-        if (productDelete == null) {
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id")Long id){
+        Product productDelete=productService.deleteProduct(id);
+        if(productDelete==null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(productDelete);
     }
 
-    // actualizar el stock del producto
+    //actualizar el stock del producto
     @GetMapping(value = "/{id}/stock")
-    public ResponseEntity<Product> updateStock(@PathVariable("id") Long id,
-            @RequestParam(name = "stock", required = true) Double stock) {
-
-        Product productUpdate = productService.updateStock(id, stock);
-        if (productUpdate == null) {
+    public ResponseEntity<Product> updateStock(@PathVariable("id")Long id, @RequestParam(name="stock",required = true)Double stock){
+        
+        Product productUpdate=productService.updateStock(id,stock);
+        if(productUpdate==null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(productUpdate);
     }
 
-    private String formatMessage(BindingResult result) {
-        List<Map<String, String>> errors = result.getFieldErrors().stream()
-                .map(err -> {
-                    Map<String, String> error = new HashMap<>();
+    private String formatMessage( BindingResult result){
+        List<Map<String,String>> errors = result.getFieldErrors().stream()
+                .map(err ->{
+                    Map<String,String>  error =  new HashMap<>();
                     error.put(err.getField(), err.getDefaultMessage());
                     return error;
 
@@ -128,13 +105,13 @@ public class ProductController {
                 .code("01")
                 .messages(errors).build();
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = "";
+        String jsonString="";
         try {
             jsonString = mapper.writeValueAsString(errorMessage);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println("El error es:" + jsonString);
+        System.out.println("El error es:"+jsonString);
         return jsonString;
     }
 }

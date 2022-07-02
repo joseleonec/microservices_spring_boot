@@ -1,7 +1,8 @@
-package ucuenca.ejemplo.store.shoppingservice.repository;
+package ucuenca.ejemplo.store.shoppingservice.Repository;
 
-import ucuenca.ejemplo.store.shoppingservice.entity.InvoiceItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import ucuenca.ejemplo.store.shoppingservice.Entity.InvoiceItem;
 
 public interface InvoiceItemsRepository extends JpaRepository<InvoiceItem,Long> {
 }

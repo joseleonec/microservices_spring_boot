@@ -1,57 +1,45 @@
 package ucuenca.ejemplo.store.serviceproduct.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 @Entity
-@Table(name = "TBL_PRODUCTS")
+@Table(name = "tbl_products")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@AllArgsConstructor @NoArgsConstructor @Builder
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "El nombre del producto es requerido")
+    @NotEmpty(message = "El nombre no debe ser vacío")
+
     private String name;
     private String description;
-
-    @Positive(message = "El stock del producto debe ser positivo")
+    @Positive(message = "El stock debe ser mayor que cero")
     private Double stock;
     private Double price;
     private String status;
 
     @Column(name = "create_at")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
-    @NotNull(message = "La categoria del producto es requerida")
-    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
+    @NotNull(message = "La categoria no puede ser vacia")
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Category category;
 
+  
+    
+    
 }
