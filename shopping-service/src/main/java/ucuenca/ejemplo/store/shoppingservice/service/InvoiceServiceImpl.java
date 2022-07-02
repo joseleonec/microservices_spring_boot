@@ -1,14 +1,20 @@
-package ucuenca.ejemplo.store.shoppingservice.service;
+package ucuenca.ejemplo.store.shoppingservice.Service;
 
-import ucuenca.ejemplo.store.shoppingservice.repository.InvoiceItemsRepository;
-import ucuenca.ejemplo.store.shoppingservice.repository.InvoiceRepository;
-import ucuenca.ejemplo.store.shoppingservice.entity.Invoice;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
+import ucuenca.ejemplo.store.shoppingservice.Entity.Invoice;
+import ucuenca.ejemplo.store.shoppingservice.Entity.InvoiceItem;
+import ucuenca.ejemplo.store.shoppingservice.Repository.InvoiceItemsRepository;
+import ucuenca.ejemplo.store.shoppingservice.Repository.InvoiceRepository;
+import ucuenca.ejemplo.store.shoppingservice.client.CustomerClient;
+import ucuenca.ejemplo.store.shoppingservice.client.ProductClient;
+import ucuenca.ejemplo.store.shoppingservice.model.Customer;
+import ucuenca.ejemplo.store.shoppingservice.model.Product;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -20,11 +26,17 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     InvoiceItemsRepository invoiceItemsRepository;
 
+    @Autowired
+    CustomerClient customerClient;
+
+    @Autowired
+    ProductClient productClient;
+
     @Override
     public List<Invoice> findInvoiceAll() {
+        // TODO Auto-generated method stub
         return  invoiceRepository.findAll();
     }
-
 
     @Override
     public Invoice createInvoice(Invoice invoice) {
@@ -33,6 +45,12 @@ public class InvoiceServiceImpl implements InvoiceService {
             return  invoiceDB;
         }
         invoice.setState("CREATED");
+        invoiceDB=invoiceRepository.save(invoice);
+
+        invoiceDB.getItems().forEach(invoiceItem->{//actualizar el stock de cada producto despues de la venta
+            productClient.updateStock(invoiceItem.getProductId(), invoiceItem.getQuantity()*-1);
+        });
+
         return invoiceRepository.save(invoice);
     }
 
@@ -64,6 +82,20 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice getInvoice(Long id) {
-        return invoiceRepository.findById(id).orElse(null);
+
+        Invoice invoice=invoiceRepository.findById(id).orElse(null);
+        if(invoice!=null){
+            Customer customer=customerClient.getCustomer(invoice.getCustomerId()).getBody();
+            invoice.setCustomer(customer);
+            List<InvoiceItem> listItem=invoice.getItems().stream().map(item->{
+                Product product = productClient.getProduct(item.getProductId()).getBody();
+                item.setProduct(product);
+                return item;
+            }).collect(Collectors.toList());
+            invoice.setItems(listItem);
+        }
+        return invoice;
     }
+   
+   
 }

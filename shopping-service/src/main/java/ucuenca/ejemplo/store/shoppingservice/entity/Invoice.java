@@ -1,20 +1,23 @@
-package ucuenca.ejemplo.store.shoppingservice.entity;
+package ucuenca.ejemplo.store.shoppingservice.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import ucuenca.ejemplo.store.shoppingservice.model.Customer;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "TBL_INVOICES")
+import javax.persistence.*;
+
+import javax.validation.Valid;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import ucuenca.ejemplo.store.shoppingservice.model.Customer;
+import lombok.Data;
+
 @Data
-public class Invoice  {
+@Entity
+@Table(name = "tlb_invoices")
+public class Invoice {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +25,7 @@ public class Invoice  {
 
     @Column(name = "number_invoice")
     private String numberInvoice;
-    
-    @Column
+
     private String description;
 
     @Column(name = "customer_id")
@@ -33,19 +35,20 @@ public class Invoice  {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
+
+
     @Valid
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
     private List<InvoiceItem> items;
 
-    @Column
     private String state;
 
-    @Transient
+    @Transient //para que no cuente como columna
     private Customer customer;
 
-    public Invoice() {
+    public Invoice(){
         items = new ArrayList<>();
     }
 
