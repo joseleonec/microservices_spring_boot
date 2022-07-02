@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "TBL_INVOICES")
-public class Invoice implements Serializable {
+@Data
+public class Invoice  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,8 @@ public class Invoice implements Serializable {
 
     @Column(name = "number_invoice")
     private String numberInvoice;
-
+    
+    @Column
     private String description;
 
     @Column(name = "customer_id")
@@ -38,6 +39,7 @@ public class Invoice implements Serializable {
     @JoinColumn(name = "invoice_id")
     private List<InvoiceItem> items;
 
+    @Column
     private String state;
 
     @Transient

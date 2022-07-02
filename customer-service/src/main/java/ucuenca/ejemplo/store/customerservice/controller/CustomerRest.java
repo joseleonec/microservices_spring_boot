@@ -34,10 +34,6 @@ import ucuenca.ejemplo.store.customerservice.service.CustomerService;
 @RequestMapping("/customers")
 public class CustomerRest {
 
-    public CustomerRest(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     public static org.slf4j.Logger getLog() {
         return log;
     }

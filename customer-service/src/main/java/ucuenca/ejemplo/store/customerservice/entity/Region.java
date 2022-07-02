@@ -9,15 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-
 @Data
 @Entity
 @Table(name = "TBL_REGIONS")
 public class Region implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String name;
 }

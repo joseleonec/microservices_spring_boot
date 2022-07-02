@@ -8,5 +8,3 @@ INSERT INTO tbl_regions (id, name) VALUES (7, 'Oceanía');
 INSERT INTO tbl_regions (id, name) VALUES (8, 'Antártida');
 
 INSERT INTO tbl_customers (id,number_id,first_name,last_name , email, photo_url, region_id, state) VALUES(1,'32404580', 'Andrés', 'Guzmán', 'profesor@bolsadeideas.com','',1,'CREATED');
-INSERT INTO tbl_customers (id,number_id,first_name,last_name , email, photo_url, region_id, state) VALUES(2,'32406531', 'Juan', 'Perez', 'profesorjuan@bolsadeideas.com','',2,'CREATED');
-INSERT INTO tbl_customers (id,number_id,first_name,last_name , email, photo_url, region_id, state) VALUES(3,'32478942', 'Carlos', 'Guaman', 'profesorcarlos@bolsadeideas.com','',3,'CREATED');
