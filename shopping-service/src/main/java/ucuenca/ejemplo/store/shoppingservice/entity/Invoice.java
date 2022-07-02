@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "TBL_INVOCES")
+@Table(name = "TBL_INVOICES")
 public class Invoice implements Serializable {
 
     @Id
