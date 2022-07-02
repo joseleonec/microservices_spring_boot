@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ucuenca.ejemplo.store.customerservice.entity.Customer;
 import ucuenca.ejemplo.store.customerservice.entity.Region;
@@ -12,14 +13,11 @@ import ucuenca.ejemplo.store.customerservice.repository.CustomerRepository;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     public static org.slf4j.Logger getLog() {
         return log;
-    }
-
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
     }
 
     @Autowired

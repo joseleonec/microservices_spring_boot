@@ -1,7 +1,3 @@
-
-
-
-
 package ucuenca.ejemplo.store.serviceproduct;
 
 import org.springframework.boot.SpringApplication;

@@ -8,9 +8,9 @@ import javax.validation.constraints.Positive;
 import java.io.Serializable;
 
 @Entity
-@Data
 @Table(name = "TBL_INVOICE_ITEMS")
-public class InvoiceItem implements Serializable {
+@Data
+public class InvoiceItem  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +18,14 @@ public class InvoiceItem implements Serializable {
 
     @Positive(message = "El stock debe ser mayor que cero")
     private Double quantity;
-
+    
+    @Column
     private Double price;
 
     @Column(name = "product_id")
     private Long productId;
-
+   
+    @Column
     @Transient
     private Double subTotal;
 
