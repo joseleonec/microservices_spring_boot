@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import ucuenca.ejemplo.store.shoppingservice.Entity.Invoice;
 import ucuenca.ejemplo.store.shoppingservice.Entity.InvoiceItem;
 import ucuenca.ejemplo.store.shoppingservice.Repository.InvoiceItemsRepository;
@@ -14,7 +15,6 @@ import ucuenca.ejemplo.store.shoppingservice.client.CustomerClient;
 import ucuenca.ejemplo.store.shoppingservice.client.ProductClient;
 import ucuenca.ejemplo.store.shoppingservice.model.Customer;
 import ucuenca.ejemplo.store.shoppingservice.model.Product;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

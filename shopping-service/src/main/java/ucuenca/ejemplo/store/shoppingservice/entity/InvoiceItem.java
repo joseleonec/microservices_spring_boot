@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Positive;
 
-import ucuenca.ejemplo.store.shoppingservice.model.Product;
 import lombok.Data;
+import ucuenca.ejemplo.store.shoppingservice.model.Product;
 
 @Entity
 @Data

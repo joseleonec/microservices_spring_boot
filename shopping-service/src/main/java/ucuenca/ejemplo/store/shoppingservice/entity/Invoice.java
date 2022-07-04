@@ -10,8 +10,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ucuenca.ejemplo.store.shoppingservice.model.Customer;
 import lombok.Data;
+import ucuenca.ejemplo.store.shoppingservice.model.Customer;
 
 @Data
 @Entity
